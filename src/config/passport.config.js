@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 import passport from 'passport';
-
 import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
-
 import { userModel } from '../DAO/models/users.model.js';
 import { createHash, isValidPassword } from '../config.js';
 import { cartService } from '../services/cart.service.js';
+import env from './config.js';
+
 const LocalStrategy = local.Strategy;
 
 export function iniPassport() {
@@ -92,8 +92,8 @@ export function iniPassport() {
     'github',
     new GitHubStrategy(
       {
-        clientID: 'Iv1.8d1e73b7334a46c9',
-        clientSecret: '9b879d1e44ccfb387b395cb7d3868192a61e6653',
+        clientID: env.githubClientId,
+        clientSecret: env.githubClientSecret,
         callbackURL: 'http://localhost:8080/api/sessions/githubcallback',
       },
       async (accesToken, _, profile, done) => {

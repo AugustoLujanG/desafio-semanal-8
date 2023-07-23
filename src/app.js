@@ -5,6 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import path from 'path';
 import { __dirname } from './config.js';
+import env from './config/config.js';
 import { iniPassport } from './config/passport.config.js';
 import { cartsApiRouter } from './routes/carts.api.router.js';
 import { cartsRouter } from './routes/carts.router.js';
@@ -21,7 +22,7 @@ import { connectMongo } from './utils/dbConnection.js';
 import { connectSocketServer } from './utils/socketServer.js';
 
 const app = express();
-const PORT = 8080;
+const PORT = env.port;
 
 connectMongo();
 
@@ -44,8 +45,7 @@ connectSocketServer(httpServer);
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        'mongodb+srv://augustolg98:FGWCsdaR1iSYbVaU@backendcoder.kughf2s.mongodb.net/?retryWrites=true&w=majority',
+      mongoUrl: env.mongoUrl,
       ttl: 86400 * 7,
     }),
     secret: 'asdmsOAMSimaioMSAOidAi21o3m',
